@@ -1,0 +1,22 @@
+{
+  "model_name": "Logistic Regression",
+  "roc_auc": 0.7221,
+  "features": [
+    "tenure",
+    "monthly_charges",
+    "total_charges",
+    "contract",
+    "internet_service",
+    "payment_method",
+    "tech_support",
+    "online_security",
+    "paperless_billing",
+    "senior_citizen",
+    "dependents",
+    "partner",
+    "num_services",
+    "charge_per_service",
+    "tenure_group",
+    "high_value"
+  ]
+}
