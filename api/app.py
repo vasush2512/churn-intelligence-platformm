@@ -37,9 +37,9 @@ try:
     FEATURE_NAMES = _load("features.pkl")
     with open(os.path.join(MODELS_DIR, "meta.json")) as f:
         META = json.load(f)
-    print(f"✅ Model loaded: {META['model_name']}  ROC-AUC: {META['roc_auc']}")
+    print(f"Model loaded: {META['model_name']}  ROC-AUC: {META['roc_auc']}")
 except FileNotFoundError:
-    print("⚠️  No trained model found. Run `python ml/train.py` first.")
+    print("Warning: no trained model found. Run `python ml/train.py` first.")
     MODEL = SCALER = ENCODERS = FEATURE_NAMES = META = None
 
 
@@ -209,4 +209,5 @@ def unavailable(e):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True, use_reloader=False)
+

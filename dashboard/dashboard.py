@@ -19,11 +19,12 @@ import plotly.express as px
 import plotly.graph_objects as go
 from dash import Dash, Input, Output, State, dcc, html
 
-sys.path.insert(0, ".")
-
 BASE_DIR = os.path.dirname(__file__)
-DATA_PATH = "data/telecom_churn.csv"
-MODELS_DIR = "models"
+PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
+sys.path.insert(0, PROJECT_ROOT)
+
+DATA_PATH = os.path.join(PROJECT_ROOT, "data", "telecom_churn.csv")
+MODELS_DIR = os.path.join(PROJECT_ROOT, "models")
 
 
 df_raw = pd.read_csv(DATA_PATH)
@@ -32,6 +33,7 @@ df_raw = pd.read_csv(DATA_PATH)
 def _load(fname):
     with open(os.path.join(MODELS_DIR, fname), "rb") as f:
         return pickle.load(f)
+
 
 
 def _icon_data_uri(svg_markup):
@@ -80,6 +82,7 @@ app = Dash(
     assets_folder=os.path.join(BASE_DIR, "assets"),
     suppress_callback_exceptions=True,
 )
+server = app.server
 
 
 CHART_LAYOUT = dict(
@@ -438,6 +441,15 @@ predictor_panel = dbc.Card(
                                                         1,
                                                         value=12,
                                                         id="p-tenure",
+                                                        marks={
+                                                            1: "1",
+                                                            12: "12",
+                                                            24: "24",
+                                                            36: "36",
+                                                            48: "48",
+                                                            60: "60",
+                                                            72: "72",
+                                                        },
                                                         tooltip={"placement": "bottom", "always_visible": True},
                                                         className="soft-slider",
                                                     ),
@@ -453,6 +465,14 @@ predictor_panel = dbc.Card(
                                                         1,
                                                         value=70,
                                                         id="p-charges",
+                                                        marks={
+                                                            20: "20",
+                                                            40: "40",
+                                                            60: "60",
+                                                            80: "80",
+                                                            100: "100",
+                                                            120: "120",
+                                                        },
                                                         tooltip={"placement": "bottom", "always_visible": True},
                                                         className="soft-slider",
                                                     ),
@@ -598,6 +618,15 @@ predictor_panel = dbc.Card(
                                                         1,
                                                         value=2,
                                                         id="p-services",
+                                                        marks={
+                                                            1: "1",
+                                                            2: "2",
+                                                            3: "3",
+                                                            4: "4",
+                                                            5: "5",
+                                                            6: "6",
+                                                            7: "7",
+                                                        },
                                                         tooltip={"placement": "bottom", "always_visible": True},
                                                         className="soft-slider",
                                                     ),
@@ -1246,5 +1275,6 @@ def predict(_, tenure, charges, contract, internet, payment, techsupport, securi
 
 
 if __name__ == "__main__":
-    print("Dashboard running -> http://localhost:8050")
-    app.run(debug=True, port=8050)
+    port = int(os.environ.get("PORT", 8050))
+    print(f"Dashboard running -> http://localhost:{port}")
+    app.run(debug=True, host="0.0.0.0", port=port, use_reloader=False)

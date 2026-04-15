@@ -993,6 +993,7 @@ h1, h2, h3, h4, .panel-title, .predictor-title, .kpi-value {
 
 .soft-slider {
   padding-top: 8px;
+  padding-bottom: 20px;
 }
 
 .soft-slider .rc-slider-rail {
@@ -1016,6 +1017,16 @@ h1, h2, h3, h4, .panel-title, .predictor-title, .kpi-value {
 
 .soft-slider .rc-slider-dot {
   display: none;
+}
+
+.soft-slider .rc-slider-mark {
+  top: 18px;
+}
+
+.soft-slider .rc-slider-mark-text {
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .soft-slider .rc-slider-tooltip-inner {
